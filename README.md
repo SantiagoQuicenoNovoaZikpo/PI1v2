@@ -1,55 +1,122 @@
-Movie Recommendation System API
-Overview
-This project is a Movie Recommendation System that utilizes FastAPI to serve various endpoints related to movie data. The project involves extracting and processing data from two datasets: credits.csv and movies_dataset.csv, which contain detailed information about movies, including cast, crew, revenue, budget, and more. The processed data is then used to create a set of API endpoints that provide movie-related information such as the number of movies released in a particular month or day, movie scores, and details about specific actors and directors.
+Aquí está el README anterior corregido con el formato adecuado:
 
-Datasets
-Credits Dataset (credits.csv): Contains information about the cast and crew of various movies.
-Movies Dataset (movies_dataset.csv): Contains additional details about movies, including titles, release dates, budgets, revenues, and more.
-Data Processing
-Data Cleaning and Transformation
-Unnesting the Data: The cast and crew columns in the credits dataset were un-nested to extract meaningful information.
-Handling Missing Values: Missing values in the revenue column were replaced with 0, and rows with missing release_date were dropped.
-Data Normalization: Dates were normalized to the format YYYY-MM-DD, and numeric columns were converted for consistency.
-Calculating Return on Investment (ROI): A new column return was created by dividing revenue by budget.
-Merging Datasets: The credits and movies datasets were merged on the id column to create a unified DataFrame.
-API Endpoints
+---
+
+# Movie Recommendation System API
+
+## Overview
+
+This project is a **Movie Recommendation System** that utilizes **FastAPI** to serve various endpoints related to movie data. The project involves extracting and processing data from two datasets: `credits.csv` and `movies_dataset.csv`, which contain detailed information about movies, including cast, crew, revenue, budget, and more. The processed data is then used to create a set of API endpoints that provide movie-related information such as the number of movies released in a particular month or day, movie scores, and details about specific actors and directors.
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Datasets](#datasets)
+- [Data Processing](#data-processing)
+- [API Endpoints](#api-endpoints)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Project Structure](#project-structure)
+- [Future Enhancements](#future-enhancements)
+- [License](#license)
+
+## Datasets
+
+- **Credits Dataset (`credits.csv`)**: Contains information about the cast and crew of various movies.
+- **Movies Dataset (`movies_dataset.csv`)**: Contains additional details about movies, including titles, release dates, budgets, revenues, and more.
+
+## Data Processing
+
+### Data Cleaning and Transformation
+
+1. **Unnesting the Data**: The `cast` and `crew` columns in the `credits` dataset were un-nested to extract meaningful information.
+2. **Handling Missing Values**: Missing values in the `revenue` column were replaced with 0, and rows with missing `release_date` were dropped.
+3. **Data Normalization**: Dates were normalized to the format `YYYY-MM-DD`, and numeric columns were converted for consistency.
+4. **Calculating Return on Investment (ROI)**: A new column `return` was created by dividing `revenue` by `budget`.
+5. **Merging Datasets**: The `credits` and `movies` datasets were merged on the `id` column to create a unified DataFrame.
+
+## API Endpoints
+
 The API provides several endpoints to interact with the movie data:
 
-/cantidad_filmaciones_mes: Returns the number of movies released in a given month.
-Parameter: mes (string) - Month in Spanish (e.g., "enero" for January).
-/cantidad_filmaciones_dia: Returns the number of movies released on a specific day of the week.
-Parameter: dia (string) - Day in Spanish (e.g., "Lunes" for Monday).
-/score_titulo: Returns the score of a specific movie based on its title.
-Parameter: titulo_de_la_filmación (string) - The title of the movie.
-/votos_titulo: Provides the total number of votes and average score for a movie.
-Parameter: titulo_de_la_filmación (string) - The title of the movie.
-/get_actor: Returns details about an actor's filmography, including the number of movies, total revenue, and average return.
-Parameter: nombre_actor (string) - The name of the actor.
-/get_director: Provides information about a director's success, including movie details, revenue, and average score.
-Parameter: nombre_director (string) - The name of the director.
-Installation
-Prerequisites
-Python 3.x
-FastAPI
-Pandas
-PyArrow
-Instructions
-Clone this repository:
+1. **`/cantidad_filmaciones_mes`**: Returns the number of movies released in a given month.
+   - **Parameter**: `mes` (string) - Month in Spanish (e.g., "enero" for January).
+   
+2. **`/cantidad_filmaciones_dia`**: Returns the number of movies released on a specific day of the week.
+   - **Parameter**: `dia` (string) - Day in Spanish (e.g., "Lunes" for Monday).
+   
+3. **`/score_titulo`**: Returns the score of a specific movie based on its title.
+   - **Parameter**: `titulo_de_la_filmación` (string) - The title of the movie.
+   
+4. **`/votos_titulo`**: Provides the total number of votes and average score for a movie.
+   - **Parameter**: `titulo_de_la_filmación` (string) - The title of the movie.
+   
+5. **`/get_actor`**: Returns details about an actor's filmography, including the number of movies, total revenue, and average return.
+   - **Parameter**: `nombre_actor` (string) - The name of the actor.
+   
+6. **`/get_director`**: Provides information about a director's success, including movie details, revenue, and average score.
+   - **Parameter**: `nombre_director` (string) - The name of the director.
 
-bash
-Copiar código
-git clone https://github.com/SantiagoQuicenoNovoaZikpo/PI1v2.git
-cd PI1v2
-Install the required Python packages:
+## Installation
 
-bash
-Copiar código
-pip install -r requirements.txt
-Run the FastAPI server:
+### Prerequisites
 
-bash
-Copiar código
-uvicorn main:app --reload
-Access the API documentation:
+- **Python 3.x**
+- **FastAPI**
+- **Pandas**
+- **PyArrow**
 
-The API documentation is automatically generated by FastAPI and can be accessed at http://127.0.0.1:8000/docs.
+### Instructions
+
+1. Clone this repository:
+
+    ```bash
+    git clone https://github.com/SantiagoQuicenoNovoaZikpo/PI1v2.git
+    cd PI1v2
+    ```
+
+2. Install the required Python packages:
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+3. Run the FastAPI server:
+
+    ```bash
+    uvicorn main:app --reload
+    ```
+
+4. Access the API documentation:
+
+    The API documentation is automatically generated by FastAPI and can be accessed at `http://127.0.0.1:8000/docs`.
+
+## Usage
+
+- To query the number of movies released in a specific month, send a GET request to `/cantidad_filmaciones_mes?mes=enero`.
+- For details about movies released on a particular day of the week, use the endpoint `/cantidad_filmaciones_dia?dia=Lunes`.
+- To retrieve the score of a movie by its title, use `/score_titulo?titulo_de_la_filmación=Jumanji`.
+- Get voting details for a movie using `/votos_titulo?titulo_de_la_filmación=Jumanji`.
+- Retrieve filmography details of an actor with `/get_actor?nombre_actor=Tom Hanks`.
+- Get the success metrics of a director with `/get_director?nombre_director=John Lasseter`.
+
+## Project Structure
+
+- **`main.py`**: Contains the FastAPI application and all the API endpoints.
+- **`df.parquet`**: Processed data stored in a Parquet file format for efficient loading.
+- **`credits.csv` and `movies_dataset.csv`**: Source datasets for the project.
+- **`requirements.txt`**: List of dependencies required to run the project.
+
+## Future Enhancements
+
+- **Recommendation System**: Develop and integrate a recommendation engine to suggest movies based on user preferences.
+- **Advanced Analytics**: Add more endpoints to provide deeper insights, such as genre-based analysis or box office predictions.
+- **Deployment**: Deploy the API to a cloud service like AWS or Heroku for public access.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+
+---
+
+Ahora el formato debe estar correcto y en línea con el ejemplo que proporcionaste.
