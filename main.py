@@ -1,5 +1,8 @@
 import pandas as pd
 from fastapi import FastAPI, HTTPException
+from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.feature_extraction.text import TfidfVectorizer
+
 
 # Cargar el DataFrame desde el archivo Parquet
 df = pd.read_parquet('df.parquet', engine='pyarrow')
@@ -147,3 +150,43 @@ def get_director(nombre_director: str):
     resultado = pd.concat([promedio_director, resultado], ignore_index=True)
     
     return resultado
+
+
+
+# Vectorizar la columna de títulos para calcular la similitud
+tfidf = TfidfVectorizer(stop_words='english')
+tfidf_matrix = tfidf.fit_transform(df['title'])
+
+# Calcular la matriz de similitud de coseno
+cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)
+
+
+@app.get("/recomendacion")
+def recomendacion(titulo):
+    # Asegurarse de que el título esté en el DataFrame
+    if titulo not in df['title'].values:
+        return f"La película '{titulo}' no está en el dataset."
+
+    # Crear una serie que mapea títulos de películas a sus índices
+    indices = pd.Series(df.index, index=df['title']).drop_duplicates()
+    # Obtener el índice de la película que coincide con el título
+    idx = indices.get(titulo)
+    
+    # Si hay múltiples índices, escoger el primero (puedes ajustar esto si lo prefieres)
+    if isinstance(idx, pd.Series):
+        idx = idx.iloc[0]
+    
+    # Calcular las puntuaciones de similitud
+    sim_scores = list(enumerate(cosine_sim[idx]))
+    
+    # Ordenar las películas por similitud
+    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+    
+    # Seleccionar las 5 películas más similares, excluyendo la película original
+    sim_scores = sim_scores[1:6]
+    
+    # Obtener los índices de las películas
+    movie_indices = [i[0] for i in sim_scores]
+    
+    # Devolver los títulos de las películas similares
+    return df['title'].iloc[movie_indices].tolist()
