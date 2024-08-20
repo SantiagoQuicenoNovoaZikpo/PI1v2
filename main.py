@@ -5,7 +5,8 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 
 
 # Cargar el DataFrame desde el archivo Parquet
-df = pd.read_parquet('df.parquet', engine='pyarrow')
+#df = pd.read_parquet('df.parquet', engine='pyarrow')
+
 
 # Crear la instancia de la aplicación FastAPI
 app = FastAPI()
