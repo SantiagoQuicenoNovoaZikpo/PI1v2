@@ -1,3 +1,4 @@
+![image](https://github.com/user-attachments/assets/4f43a951-a47b-4ffb-b089-73643d3eb9b9)
 
 # Movie Recommendation System API
 
