@@ -257,7 +257,7 @@ def recomendacion(titulo):
     
     # Vectorizar la columna de títulos para calcular la similitud
     tfidf = TfidfVectorizer(stop_words='english')
-    tfidf_matrix = tfidf.fit_transform(dfm['title'])
+    tfidf_matrix = tfidf.fit_transform(df['title'])
 
     # Calcular la matriz de similitud de coseno
     cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)
