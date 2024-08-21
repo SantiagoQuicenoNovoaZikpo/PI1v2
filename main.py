@@ -3,6 +3,8 @@ from fastapi import FastAPI, HTTPException
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import TfidfVectorizer
 import uvicorn
+import os
+
 
 # Cargar el DataFrame desde el archivo Parquet
 #df = pd.read_parquet('df.parquet', engine='pyarrow')
