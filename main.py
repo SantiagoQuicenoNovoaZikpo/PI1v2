@@ -11,6 +11,10 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 # Crear la instancia de la aplicación FastAPI
 app = FastAPI()
 
+if __name__ == "__main__":
+    port = int(os.environ.get('PORT', 10000))  # Render asigna el puerto a través de esta variable
+    uvicorn.run(app, host="0.0.0.0", port=port)
+
 @app.get("/cantidad_filmaciones_mes")
 def cantidad_filmaciones_mes(mes: str):
 
