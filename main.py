@@ -2,7 +2,7 @@ import pandas as pd
 from fastapi import FastAPI, HTTPException
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import TfidfVectorizer
-
+import uvicorn
 
 # Cargar el DataFrame desde el archivo Parquet
 #df = pd.read_parquet('df.parquet', engine='pyarrow')
@@ -11,8 +11,14 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 # Crear la instancia de la aplicación FastAPI
 app = FastAPI()
 
+# Configurar la aplicación para usar el puerto asignado por Render
+port = int(os.environ.get('PORT', 10000))
+
+@app.get("/")
+def read_root():
+    return {"Hello": "World"}
+
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 10000))  # Render asigna el puerto a través de esta variable
     uvicorn.run(app, host="0.0.0.0", port=port)
 
 @app.get("/cantidad_filmaciones_mes")
